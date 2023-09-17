@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Express WebSocket Chat</title>
+</head>
+
+<body>
+  <h1>WebSocket Chat</h1>
+  <div id="chat">
+    <div id="messages"></div>
+    <input type="text" id="messageInput" placeholder="Enter your message">
+    <button id="sendButton">Send</button>
+  </div>
+  <script>
+    const socket = new WebSocket(`ws://${window.location.hostname}:${window.location.port}`);
+
+    socket.addEventListener('open', (event) => {
+      console.log('WebSocket connection established.');
+    });
+
+    // async function messageSetter(event) {
+    //   try {
+    //     const text = await event.data.text;
+    //     if (text) {
+    //       return text;
+    //     } else {
+    //       return "error";
+    //     }
+    //   } catch (err) {
+    //     console.log('error in message setter', err);
+    //   }
+    // }
+
+    socket.addEventListener('message', (event) => {
+      console.log('event', event);
+      const messagesDiv = document.getElementById('messages');
+      event.data.text().then((text) => {
+        // Now 'text' contains the text-based data
+        console.log('Received message:', text);
+        const message = document.createElement('div');
+        message.classList.add('kishan');
+        console.log(message);
+        message.innerHTML = text;
+        messagesDiv.appendChild(message);
+      });
+
+    });
+
+    socket.addEventListener('close', (event) => {
+      console.log('WebSocket connection closed.');
+    });
+
+    const sendButton = document.getElementById('sendButton');
+    const messageInput = document.getElementById('messageInput');
+
+    sendButton.addEventListener('click', () => {
+      const message = messageInput.value;
+      const messagesDiv = document.getElementById('messages');
+      const messageSent = document.createElement('div');
+      messageSent.innerHTML = message;
+      messagesDiv.appendChild(messageSent);
+      socket.send(message);
+      messageInput.value = '';
+    });
+  </script>
+</body>
+
+</html>
