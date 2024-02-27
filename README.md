@@ -42,4 +42,4 @@ After setting up the project and starting the server, you'll need to open two se
 - If you encounter any issues, ensure that the server is running correctly and that there are no errors in the console.
 - Feel free to explore and modify the project as needed. It's a great starting point for building real-time chat applications, collaborative tools, and more.
 
-Enjoy using the Web Socket project for real-time communication! If you have any questions or feedback, feel free to reach out to the project maintainers.
+Enjoy using the Web Socket project for real-time communication! If you have any questions or feedback, feel free to reach out to me at ```kishanmishrawork@gmail.com```.
