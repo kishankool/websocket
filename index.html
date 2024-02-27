@@ -42,9 +42,17 @@
         const message = document.createElement('div');
         message.classList.add('kishan');
         console.log(message);
-        message.innerHTML = text;
+        message.innerHTML = "server: " + text;
         messagesDiv.appendChild(message);
+
+        // Notify the user about the new message
+        if (document.visibilityState !== 'visible') {
+          showNotification(text);
+        }
       });
+
+
+
 
     });
 
@@ -59,11 +67,26 @@
       const message = messageInput.value;
       const messagesDiv = document.getElementById('messages');
       const messageSent = document.createElement('div');
-      messageSent.innerHTML = message;
+      messageSent.innerHTML = "me :"+ message;
       messagesDiv.appendChild(messageSent);
       socket.send(message);
       messageInput.value = '';
     });
+
+    // Function to show a notification
+    function showNotification(message) {
+      if (Notification.permission === 'granted') {
+        const notification = new Notification('New Message', {
+          body: message,
+        });
+      } else if (Notification.permission !== 'denied') {
+        Notification.requestPermission().then((permission) => {
+          if (permission === 'granted') {
+            showNotification(message);
+          }
+        });
+      }
+    }
   </script>
 </body>
 
